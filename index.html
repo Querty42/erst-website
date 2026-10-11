@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070b16">
+  <meta name="description" content="ERST — serwer Minecraft Java. Dołącz do gry i zbuduj swoją historię.">
+  <title>ERST — Minecraft Server</title>
+  <style>
+    :root{--bg:#060914;--panel:#0b1224;--panel2:#101b32;--blue:#17bfff;--blue2:#426dff;--text:#f3f7ff;--muted:#9caecb;--line:rgba(87,173,255,.2);--green:#54f2a1}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(ellipse at 50% -15%,#122d62 0,transparent 48%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .wrap{width:min(1120px,calc(100% - 40px));margin:auto}
+    header{position:sticky;top:0;z-index:10;background:rgba(6,9,20,.78);backdrop-filter:blur(16px);border-bottom:1px solid rgba(87,173,255,.12)}
+    nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:950;letter-spacing:.16em;font-size:1.25rem}
+    .brand-mark{width:38px;height:38px;display:grid;place-items:center;border:1px solid #27c4ff;border-radius:11px;background:linear-gradient(145deg,#193e7b,#071126);box-shadow:0 0 24px #0b7cff55;color:#fff}
+    .brand-mark svg{width:24px}
+    .navlinks{display:flex;gap:26px;color:var(--muted);font-size:.92rem}
+    .navlinks a:hover{color:#fff}
+    .menu-btn{display:none;background:none;border:1px solid var(--line);color:white;border-radius:10px;padding:8px 11px}
+    .hero{min-height:620px;display:grid;place-items:center;text-align:center;padding:84px 0 74px;position:relative;overflow:hidden}
+    .hero:before,.hero:after{content:"";position:absolute;pointer-events:none;border-radius:50%;filter:blur(2px)}
+    .hero:before{width:420px;height:420px;left:-250px;top:100px;border:1px solid #168fff55;box-shadow:0 0 90px #087dff18}
+    .hero:after{width:520px;height:520px;right:-330px;bottom:-120px;border:1px solid #168fff55;box-shadow:0 0 100px #087dff22}
+    .hero-inner{position:relative;z-index:1;max-width:800px}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 12px;border:1px solid var(--line);background:#0b1830;border-radius:999px;color:#b7d9ff;font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    .dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}
+    h1{font-size:clamp(4.6rem,14vw,9rem);line-height:.95;letter-spacing:-.075em;margin:27px 0 16px;font-weight:1000;background:linear-gradient(180deg,#fff 10%,#a8dfff 47%,#2c88ff 83%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 9px 28px #168fff3d)}
+    .hero p{font-size:clamp(1rem,2.4vw,1.2rem);color:var(--muted);max-width:590px;margin:0 auto}
+    .actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:30px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid transparent;border-radius:12px;padding:13px 19px;font-weight:850;cursor:pointer;transition:transform .18s,box-shadow .18s,border-color .18s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:linear-gradient(110deg,#168eff,#3458ff);box-shadow:0 8px 30px #126fff3b;color:white}
+    .btn-primary:hover{box-shadow:0 10px 38px #126fff66}
+    .btn-secondary{background:#0b1428;border-color:#29466f;color:#e6f4ff}
+    .btn svg{width:18px;height:18px}
+    .server-pill{margin:34px auto 0;display:flex;align-items:center;gap:12px;max-width:440px;text-align:left;padding:13px 16px;background:rgba(9,17,34,.82);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 50px #0002}
+    .server-icon{width:42px;height:42px;flex:0 0 42px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(145deg,#164b91,#10172c);border:1px solid #2b9fff55}
+    .server-icon svg{width:25px}
+    .server-meta{flex:1;min-width:0}
+    .server-meta small{display:block;color:var(--muted);font-size:.75rem}
+    .server-meta strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:1rem}
+    .copy-mini{background:#122b4c;border:1px solid #2567a6;color:#d9f0ff;border-radius:9px;padding:9px 11px;cursor:pointer;font-size:.82rem;font-weight:800}
+    section{padding:76px 0}
+    .section-head{text-align:center;max-width:660px;margin:0 auto 34px}
+    .section-head .kicker{color:var(--blue);text-transform:uppercase;letter-spacing:.16em;font-size:.75rem;font-weight:900}
+    h2{font-size:clamp(2rem,5vw,3rem);line-height:1.1;letter-spacing:-.04em;margin:10px 0 12px}
+    .section-head p{color:var(--muted);margin:0}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{border:1px solid var(--line);background:linear-gradient(145deg,rgba(16,28,52,.9),rgba(8,13,27,.94));border-radius:18px;padding:24px;min-height:180px;position:relative;overflow:hidden}
+    .card:after{content:"";position:absolute;width:140px;height:140px;right:-70px;top:-70px;border-radius:50%;background:#148fff13;filter:blur(2px)}
+    .card-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:#102c50;border:1px solid #277ec155;color:#68ceff;margin-bottom:17px}
+    .card-icon svg{width:23px;height:23px}
+    .card h3{margin:0 0 6px;font-size:1.1rem}
+    .card p{margin:0;color:var(--muted);font-size:.92rem}
+    .status-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+    .status-card{background:linear-gradient(135deg,#0e1c37,#090f20);border:1px solid #237ac344;border-radius:20px;padding:28px}
+    .status-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .status-top h3{margin:0;font-size:1.15rem}
+    .status-badge{display:inline-flex;align-items:center;gap:7px;border-radius:999px;background:#102b28;color:#8cf4c0;padding:6px 10px;font-size:.75rem;font-weight:800}
+    .status-number{font-size:3.3rem;font-weight:950;letter-spacing:-.06em;margin:18px 0 0}
+    .status-sub{color:var(--muted);font-size:.9rem}
+    .status-track{height:7px;background:#1b2a43;border-radius:99px;margin-top:17px;overflow:hidden}
+    .status-track span{display:block;height:100%;width:0;background:linear-gradient(90deg,#14c9ff,#4d70ff);border-radius:99px;transition:width .5s}
+    .rules{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .rule{display:flex;gap:14px;padding:19px;border:1px solid var(--line);border-radius:15px;background:#0a1121}
+    .rule-num{font-size:.8rem;font-weight:900;color:#62cfff;border:1px solid #247bb255;background:#102744;border-radius:9px;width:34px;height:34px;display:grid;place-items:center;flex:0 0 34px}
+    .rule strong{display:block;margin-bottom:4px}
+    .rule p{margin:0;color:var(--muted);font-size:.88rem}
+    .discord-banner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:32px;border:1px solid #536bff44;border-radius:22px;background:radial-gradient(ellipse at 100% 0,#3047a52c,transparent 45%),linear-gradient(110deg,#101b35,#0b1123)}
+    .discord-banner h2{font-size:clamp(1.6rem,4vw,2.4rem);margin:0 0 8px}
+    .discord-banner p{margin:0;color:var(--muted)}
+    footer{border-top:1px solid #17243b;padding:25px 0;color:#8091af;font-size:.84rem}
+    .footer-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    .toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:30;background:#e9f8ff;color:#071324;padding:11px 16px;border-radius:10px;font-weight:850;box-shadow:0 8px 40px #0006;transition:.22s}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:760px){.navlinks{display:none;position:absolute;top:75px;left:0;right:0;background:#080e1d;padding:18px 22px 22px;flex-direction:column;gap:16px;border-bottom:1px solid var(--line)}.navlinks.open{display:flex}.menu-btn{display:block}.hero{min-height:570px;padding:72px 0 60px}.grid{grid-template-columns:1fr}.card{min-height:0}.status-layout{grid-template-columns:1fr}.rules{grid-template-columns:1fr}.discord-banner{align-items:flex-start;flex-direction:column}.server-pill{max-width:100%}section{padding:60px 0}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <nav aria-label="Główna nawigacja">
+      <a class="brand" href="#top" aria-label="ERST — strona główna">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 3h16v5H9v2h9v4H9v2h11v5H4V3Z" fill="currentColor"/><path d="M4 3h16" stroke="#4ed4ff" stroke-width="1.5"/></svg></span>
+        <span>ERST</span>
+      </a>
+      <div class="navlinks" id="navlinks">
+        <a href="#serwer">Serwer</a><a href="#status">Status</a><a href="#regulamin">Regulamin</a><a href="#discord">Discord</a>
+      </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Otwórz menu" aria-expanded="false">☰</button>
+    </nav>
+  </div>
+</header>
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow"><span class="dot"></span> Minecraft Java Edition</div>
+      <h1>ERST</h1>
+      <p>Twoja przygoda zaczyna się tutaj. Wskakuj na serwer, poznawaj graczy i twórz własną historię.</p>
+      <div class="actions">
+        <button class="btn btn-primary" id="copyMain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>Kopiuj IP serwera</button>
+        <a class="btn btn-secondary" href="#status">Sprawdź status <span aria-hidden="true">↘</span></a>
+      </div>
+      <div class="server-pill" id="serwer">
+        <div class="server-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5Z" fill="#1c5594" fill-opacity=".55"/><path d="m3.5 7.3 8.5 5 8.5-5M12 12.3V22"/><path d="M7 4.8 16 10"/></svg></div>
+        <div class="server-meta"><small>ADRES SERWERA</small><strong>erst.falix.gg</strong></div>
+        <button class="copy-mini" id="copySmall">Kopiuj</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">Poznaj ERST</div><h2>Wskakuj do gry</h2><p>Wszystko, czego potrzebujesz, żeby dołączyć do naszej społeczności.</p></div>
+      <div class="grid">
+        <article class="card"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 21 7v10l-9 5-9-5V7l9-5Z"/><path d="m3.5 7.5 8.5 5 8.5-5M12 12.5V22"/></svg></div><h3>Proste dołączenie</h3><p>Uruchom Minecraft Java, dodaj serwer i wpisz adres <strong>erst.falix.gg</strong>.</p></article>
+        <article class="card"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 10h.01M16 10h.01M9 16c2 1.5 4 1.5 6 0M7 5 5 3M17 5l2-2"/><rect x="3" y="5" width="18" height="15" rx="5"/><path d="M7 20v2m10-2v2"/></svg></div><h3>Społeczność</h3><p>Znajdź innych graczy, bądź na bieżąco i dołącz do rozmów na Discordzie.</p></article>
+        <article class="card"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 20 6v5c0 5-3.4 8.2-8 10-4.6-1.8-8-5-8-10V6l8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></div><h3>Fair play</h3><p>Graj uczciwie, szanuj innych i pomóż tworzyć przyjazne miejsce dla wszystkich.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="status">
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">Na żywo</div><h2>Status serwera</h2><p>Strona próbuje pobrać aktualny status serwera. Jeśli serwer lub API nie odpowiada, zobaczysz informację o braku danych.</p></div>
+      <div class="status-layout">
+        <div class="status-card">
+          <div class="status-top"><h3>ERST Network</h3><span class="status-badge" id="statusBadge"><span class="dot"></span> Sprawdzanie</span></div>
+          <div class="status-number" id="playerCount">— / —</div>
+          <div class="status-sub" id="playerLabel">Pobieranie liczby graczy…</div>
+          <div class="status-track"><span id="playerBar"></span></div>
+        </div>
+        <div class="status-card">
+          <div class="status-top"><h3>Adres serwera</h3><span class="status-badge" style="background:#10223a;color:#a9dfff"><span style="width:7px;height:7px;border-radius:50%;background:#48baff"></span> Java</span></div>
+          <div class="status-number" style="font-size:2rem;margin-top:24px">erst.falix.gg</div>
+          <div class="status-sub">Minecraft: Java Edition</div>
+          <div style="margin-top:20px"><button class="btn btn-secondary" id="copyStatus">Kopiuj adres</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="regulamin">
+    <div class="wrap">
+      <div class="section-head"><div class="kicker">Ważne zasady</div><h2>Regulamin serwera</h2><p>Krótki zestaw zasad na start. Właściciel serwera powinien dopasować go do faktycznych zasad ERST.</p></div>
+      <div class="rules">
+        <div class="rule"><span class="rule-num">01</span><div><strong>Szanuj innych</strong><p>Zakaz nękania, gróźb, dyskryminacji i celowego uprzykrzania gry.</p></div></div>
+        <div class="rule"><span class="rule-num">02</span><div><strong>Bez cheatów</strong><p>Zakaz cheatów, niedozwolonych modyfikacji, exploitów i wykorzystywania błędów.</p></div></div>
+        <div class="rule"><span class="rule-num">03</span><div><strong>Nie spamuj</strong><p>Nie flooduj czatu, nie reklamuj innych serwerów bez zgody administracji.</p></div></div>
+        <div class="rule"><span class="rule-num">04</span><div><strong>Chroń cudzą własność</strong><p>Nie griefuj i nie zabieraj cudzych przedmiotów. Respektuj ustalenia innych graczy.</p></div></div>
+        <div class="rule"><span class="rule-num">05</span><div><strong>Słuchaj administracji</strong><p>Nie utrudniaj pracy moderatorom. Odwołania od kar kieruj właściwym kanałem.</p></div></div>
+        <div class="rule"><span class="rule-num">06</span><div><strong>Graj fair</strong><p>Nie wykorzystuj błędów gry ani serwera dla własnej korzyści. Zgłaszaj je administracji.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="discord">
+    <div class="wrap">
+      <div class="discord-banner">
+        <div><h2>Dołącz do społeczności ERST</h2><p>Discord serwera — ogłoszenia, pomoc i kontakt z graczami.</p></div>
+        <a class="btn btn-primary" id="discordLink" href="#discord" target="_blank" rel="noopener noreferrer">Otwórz Discord <span aria-hidden="true">↗</span></a>
+      </div>
+      <p id="discordNote" style="color:#7f91b2;font-size:.8rem;margin:12px 4px 0">Uwaga: przed publikacją wstaw swój prawdziwy link zaproszenia Discord w pliku index.html.</p>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap footer-inner"><span>© <span id="year"></span> ERST Minecraft Server</span><span>Stworzone dla społeczności ERST · Minecraft Java Edition</span></div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite">Skopiowano IP serwera!</div>
+<script>
+  const SERVER_IP = 'erst.falix.gg';
+  // Wklej tutaj prawdziwy link zaproszenia Discord, np. https://discord.gg/twojkod
+  const DISCORD_INVITE = '';
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  function showToast(message){toast.textContent=message;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2200)}
+  async function copyIp(){
+    try {
+      if(navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(SERVER_IP);
+      else { const el=document.createElement('textarea');el.value=SERVER_IP;el.style.position='fixed';el.style.opacity='0';document.body.appendChild(el);el.select();const ok=document.execCommand('copy');el.remove();if(!ok)throw new Error('copy failed'); }
+      showToast('Skopiowano IP: '+SERVER_IP);
+    } catch(e) { showToast('Adres serwera: '+SERVER_IP); }
+  }
+  ['copyMain','copySmall','copyStatus'].forEach(id=>document.getElementById(id).addEventListener('click',copyIp));
+  document.getElementById('year').textContent=new Date().getFullYear();
+  const menuBtn=document.getElementById('menuBtn'),navlinks=document.getElementById('navlinks');
+  menuBtn.addEventListener('click',()=>{const open=navlinks.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open));menuBtn.textContent=open?'✕':'☰'});
+  navlinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navlinks.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');menuBtn.textContent='☰'}));
+  const discordLink=document.getElementById('discordLink'),discordNote=document.getElementById('discordNote');
+  if(DISCORD_INVITE){discordLink.href=DISCORD_INVITE;discordNote.textContent='';}
+  else {discordLink.addEventListener('click',e=>{e.preventDefault();showToast('Dodaj link Discord w pliku index.html');});}
+
+  async function loadStatus(){
+    const badge=document.getElementById('statusBadge'),count=document.getElementById('playerCount'),label=document.getElementById('playerLabel'),bar=document.getElementById('playerBar');
+    try{
+      const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),6500);
+      const response=await fetch('https://api.mcsrvstat.us/3/'+encodeURIComponent(SERVER_IP),{signal:controller.signal,cache:'no-store'});
+      clearTimeout(timer);
+      if(!response.ok)throw new Error('status unavailable');
+      const data=await response.json();
+      if(data.online){
+        const online=Number(data.players?.online??0),max=Number(data.players?.max??0);
+        badge.innerHTML='<span class="dot"></span> Online';
+        count.textContent=online+' / '+(max||'—');
+        label.textContent=(online===1?'gracz online':online>=2&&online<=4?'graczy online':'graczy online')+' · odświeżono przed chwilą';
+        bar.style.width=max>0?Math.min(100,online/max*100)+'%':'0%';
+      }else{
+        badge.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:#ffb454"></span> Offline';
+        count.textContent='0 / —';label.textContent='Serwer jest offline lub nie odpowiada na zapytanie.';bar.style.width='0%';
+      }
+    }catch(e){
+      badge.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:#ffb454"></span> Brak danych';
+      count.textContent='— / —';label.textContent='Nie udało się pobrać statusu. Spróbuj odświeżyć stronę.';bar.style.width='0%';
+    }
+  }
+  loadStatus();
+  setInterval(loadStatus,60000);
+</script>
+</body>
+</html>
